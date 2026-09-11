@@ -19,11 +19,24 @@ jobs:
       with:
         xcode-version: latest-stable
 
-    - name: Build iOS Application
+    - name: Build iOS App
       run: |
         xcodebuild build \
           -scheme PDFToAudiobook \
           -destination 'generic/platform=iOS' \
           -configuration Release \
+          -derivedDataPath build \
           CODE_SIGNING_ALLOWED=NO \
           CODE_SIGNING_REQUIRED=NO
+
+    - name: Package App as Artifact
+      run: |
+        mkdir -p Payload
+        cp -r build/Build/Products/Release-iphoneos/*.app Payload/ 2>/dev/null || true
+        zip -r PDFToAudiobook.ipa Payload
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PDFToAudiobook-iOS
+        path: PDFToAudiobook.ipa
