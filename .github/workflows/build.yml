@@ -19,5 +19,11 @@ jobs:
       with:
         xcode-version: latest-stable
 
-    - name: Build Swift Package
-      run: swift build -c release
+    - name: Build iOS Application
+      run: |
+        xcodebuild build \
+          -scheme PDFToAudiobook \
+          -destination 'generic/platform=iOS' \
+          -configuration Release \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO
