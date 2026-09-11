@@ -19,14 +19,5 @@ jobs:
       with:
         xcode-version: latest-stable
 
-    - name: Generate Xcode Project
-      run: swift package generate-xcodeproj
-
-    - name: Build App
-      run: |
-        xcodebuild build \
-          -project PDFToAudiobook.xcodeproj \
-          -scheme PDFToAudiobook \
-          -sdk iphoneos \
-          -configuration Release \
-          CODE_SIGNING_ALLOWED=NO
+    - name: Build Swift Package
+      run: swift build -c release
